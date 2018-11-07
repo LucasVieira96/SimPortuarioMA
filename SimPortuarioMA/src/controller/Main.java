@@ -10,10 +10,11 @@ import jade.core.Profile;
 import jade.core.ProfileImpl;
 import jade.wrapper.AgentController;
 import jade.wrapper.ContainerController;
+import view.Patio;
 
 /**
  *
- * @author 5922496
+ * @author Lucas
  */
 public class Main {
 
@@ -22,12 +23,15 @@ public class Main {
             Runtime rt = Runtime.instance();
             Profile p = new ProfileImpl();
             ContainerController cc = rt.createMainContainer(p);
-            AgentController ac = cc.createNewAgent("Lucas", "Main.MyAgent", args);
+//            AgentController ac = cc.createNewAgent("Lucas", "Main.MyAgent", args);
+            AgentController ac = cc.createNewAgent("Gate", "controller.agentes.AgentGate", args);
             AgentController rma = cc.createNewAgent("rma", "jade.tools.rma.rma", args);
             ac.start();
             rma.start();
         } catch (Exception e) {
             System.out.println("Erro: " + e.getMessage());
         }
+        Patio patio = new Patio();
+        patio.setVisible(true);
     }
 }
