@@ -11,14 +11,14 @@ import java.awt.Color;
  *
  * @author Lucas
  */
-public class Caminhão {
+public class Caminhao {
 
     private String placa;
     private Color cor;
     private Container container;
     private boolean carregado = false;
 
-    public Caminhão(String placa, Color cor, Container container) {
+    public Caminhao(String placa, Color cor, Container container) {
         this.placa = placa;
         this.cor = cor;
         this.container = container;

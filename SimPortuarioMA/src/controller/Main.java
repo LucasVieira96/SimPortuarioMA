@@ -22,7 +22,7 @@ public class Main {
             Runtime rt = Runtime.instance();
             Profile p = new ProfileImpl();
             ContainerController cc = rt.createMainContainer(p);
-            AgentController ac = cc.createNewAgent("Lucas", "Main.MyAgent", args);
+            AgentController ac = cc.createNewAgent("Lucas", "controller.MainAgent", args);
             AgentController rma = cc.createNewAgent("rma", "jade.tools.rma.rma", args);
             ac.start();
             rma.start();
