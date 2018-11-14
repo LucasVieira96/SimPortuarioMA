@@ -24,11 +24,11 @@ public class Main {
             Runtime rt = Runtime.instance();
             Profile p = new ProfileImpl();
             ContainerController cc = rt.createMainContainer(p);
-            AgentController ac = cc.createNewAgent("Gate", "controller.agentes.AgentGate", args);
+            AgentController ac = cc.createNewAgent("Main", "controller.MainAgent", args);
             AgentController rma = cc.createNewAgent("rma", "jade.tools.rma.rma", args);
             ac.start();
             rma.start();
-        } catch (Exception e) {
+        } catch (StaleProxyException e) {
             System.out.println("Erro: " + e.getMessage());
         }
         Patio patio = new Patio();
