@@ -5,6 +5,8 @@
  */
 package view;
 
+import javax.swing.JPanel;
+
 /**
  *
  * @author Lucas
@@ -36,8 +38,11 @@ public class Patio extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         JPanelAsfalto = new javax.swing.JPanel();
+        jPanelPosicaoGateIN = new javax.swing.JPanel();
+        jPanelPosicaoGateOUT = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(600, 400));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanelAgua.setBackground(new java.awt.Color(33, 100, 163));
@@ -71,17 +76,49 @@ public class Patio extends javax.swing.JFrame {
         getContentPane().add(jPanelAgua, gridBagConstraints);
 
         JPanelAsfalto.setBackground(new java.awt.Color(51, 51, 51));
+        JPanelAsfalto.setMinimumSize(new java.awt.Dimension(600, 400));
+        JPanelAsfalto.setPreferredSize(new java.awt.Dimension(600, 400));
+        JPanelAsfalto.setLayout(new java.awt.GridBagLayout());
 
-        javax.swing.GroupLayout JPanelAsfaltoLayout = new javax.swing.GroupLayout(JPanelAsfalto);
-        JPanelAsfalto.setLayout(JPanelAsfaltoLayout);
-        JPanelAsfaltoLayout.setHorizontalGroup(
-            JPanelAsfaltoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 5120, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPanelPosicaoGateINLayout = new javax.swing.GroupLayout(jPanelPosicaoGateIN);
+        jPanelPosicaoGateIN.setLayout(jPanelPosicaoGateINLayout);
+        jPanelPosicaoGateINLayout.setHorizontalGroup(
+            jPanelPosicaoGateINLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 200, Short.MAX_VALUE)
         );
-        JPanelAsfaltoLayout.setVerticalGroup(
-            JPanelAsfaltoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 2362, Short.MAX_VALUE)
+        jPanelPosicaoGateINLayout.setVerticalGroup(
+            jPanelPosicaoGateINLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
         );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
+        gridBagConstraints.weightx = 2.0;
+        gridBagConstraints.weighty = 2.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 150, 20);
+        JPanelAsfalto.add(jPanelPosicaoGateIN, gridBagConstraints);
+
+        javax.swing.GroupLayout jPanelPosicaoGateOUTLayout = new javax.swing.GroupLayout(jPanelPosicaoGateOUT);
+        jPanelPosicaoGateOUT.setLayout(jPanelPosicaoGateOUTLayout);
+        jPanelPosicaoGateOUTLayout.setHorizontalGroup(
+            jPanelPosicaoGateOUTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanelPosicaoGateOUTLayout.setVerticalGroup(
+            jPanelPosicaoGateOUTLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
+        gridBagConstraints.weightx = 2.0;
+        gridBagConstraints.weighty = 2.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 150, 20);
+        JPanelAsfalto.add(jPanelPosicaoGateOUT, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -132,6 +169,18 @@ public class Patio extends javax.swing.JFrame {
         });
     }
 
+    public JPanel getJPanelAsfalto() {
+        return JPanelAsfalto;
+    }
+
+    public JPanel getjPanelPosicaoGateIN() {
+        return jPanelPosicaoGateIN;
+    }
+
+    public JPanel getjPanelPosicaoGateOUT() {
+        return jPanelPosicaoGateOUT;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JPanelAsfalto;
     private javax.swing.JLabel jLabel1;
@@ -140,5 +189,7 @@ public class Patio extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanelAgua;
+    private javax.swing.JPanel jPanelPosicaoGateIN;
+    private javax.swing.JPanel jPanelPosicaoGateOUT;
     // End of variables declaration//GEN-END:variables
 }
