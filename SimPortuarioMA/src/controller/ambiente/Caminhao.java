@@ -6,6 +6,7 @@
 package controller.ambiente;
 
 import java.awt.Color;
+import java.util.Random;
 
 /**
  *
@@ -19,6 +20,7 @@ public class Caminhao {
     private boolean carregado = false;
 
     public Caminhao(String placa, Color cor, Container container) {
+
         this.placa = placa;
         this.cor = cor;
         this.container = container;
@@ -29,13 +31,17 @@ public class Caminhao {
         }
     }
 
-    public Container descarregaContainer(){
-        if(container != null){
+    public Caminhao(Color cor, Container container) {
+        this(gerarPlaca(), cor, container);
+    }
+
+    public Container descarregaContainer() {
+        if (container != null) {
             carregado = false;
         }
         return container;
     }
-    
+
     public String getPlaca() {
         return placa;
     }
@@ -62,9 +68,36 @@ public class Caminhao {
             this.carregado = true;
         }
     }
-    
-    public boolean isCarregado(){
+
+    public boolean isCarregado() {
         return carregado;
     }
 
+    private static String gerarPlaca() {
+        String str = "";
+
+        int leftLimit = 65; // letter 'a'
+        int rightLimit = 90; // letter 'z'
+        Random random = new Random();
+        StringBuilder buffer = new StringBuilder(8);
+        for (int i = 0; i < 3; i++) {
+            int randomLimitedInt = leftLimit + (int) (random.nextFloat() * (rightLimit - leftLimit + 1));
+            buffer.append((char) randomLimitedInt);
+        }
+
+        buffer.append((char) '-');
+
+        leftLimit = 48; // letter '0'
+        rightLimit = 57; // letter '9'
+        for (int i = 0; i < 4; i++) {
+            int randomLimitedInt = leftLimit + (int) (random.nextFloat() * (rightLimit - leftLimit + 1));
+            buffer.append((char) randomLimitedInt);
+        }
+
+        String generatedString = buffer.toString();
+
+        str += generatedString;
+
+        return str;
+    }
 }

@@ -31,7 +31,7 @@ public class Main {
         } catch (StaleProxyException e) {
             System.out.println("Erro: " + e.getMessage());
         }
-        Patio patio = new Patio();
-        patio.setVisible(true);
+        //Patio patio = new Patio();
+        //patio.setVisible(true);
     }
 }

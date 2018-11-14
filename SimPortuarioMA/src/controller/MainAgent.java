@@ -6,11 +6,16 @@
 package controller;
 
 import controller.ambiente.Caminhao;
+import controller.ambiente.Container;
+import controller.ambiente.Navio;
 import jade.core.Agent;
 import jade.core.behaviours.TickerBehaviour;
+import java.awt.Color;
 import java.lang.reflect.Array;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  *
@@ -18,12 +23,14 @@ import java.util.List;
  */
 public class MainAgent extends Agent {
 
-    private List<Caminhao> caminhoesNoPorto = new ArrayList<>();
-    
+    private List<Caminhao> caminhoes = new ArrayList<>();
+    private List<Navio> navios = new ArrayList<>();
+
     @Override
     protected void setup() {
         System.out.println("Main Agent setup");
-        
+        navios.add(new Navio());
+        navios.add(new Navio());
         this.createChegadaCaminhaoBehavior();
     }
 
@@ -32,14 +39,18 @@ public class MainAgent extends Agent {
         System.out.println("Main Agent down");
     }
 
-    private void createChegadaCaminhaoBehavior(){
-        
+    private void createChegadaCaminhaoBehavior() {
+
         addBehaviour(new TickerBehaviour(this, 10000) {
             @Override
             protected void onTick() {
                 System.out.println("Novo caminhão chegando....");
+                caminhoes.add(
+                        new Caminhao(Color.red,
+                                new Container(navios.get(
+                                        new Random().nextInt(navios.size() - 1)), Color.red)));
             }
-            
+
         });
     }
 }
