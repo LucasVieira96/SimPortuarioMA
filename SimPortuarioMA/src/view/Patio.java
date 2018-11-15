@@ -5,6 +5,13 @@
  */
 package view;
 
+import controller.ambiente.Caminhao;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -40,9 +47,12 @@ public class Patio extends javax.swing.JFrame {
         JPanelAsfalto = new javax.swing.JPanel();
         jPanelPosicaoGateIN = new javax.swing.JPanel();
         jPanelPosicaoGateOUT = new javax.swing.JPanel();
+        jPanelRuaGateIn = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(600, 400));
+        setPreferredSize(new java.awt.Dimension(800, 600));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanelAgua.setBackground(new java.awt.Color(33, 100, 163));
@@ -96,8 +106,7 @@ public class Patio extends javax.swing.JFrame {
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
         gridBagConstraints.weightx = 2.0;
-        gridBagConstraints.weighty = 2.0;
-        gridBagConstraints.insets = new java.awt.Insets(0, 20, 150, 20);
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 20);
         JPanelAsfalto.add(jPanelPosicaoGateIN, gridBagConstraints);
 
         javax.swing.GroupLayout jPanelPosicaoGateOUTLayout = new javax.swing.GroupLayout(jPanelPosicaoGateOUT);
@@ -114,11 +123,23 @@ public class Patio extends javax.swing.JFrame {
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 100;
+        gridBagConstraints.ipady = 100;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHEAST;
         gridBagConstraints.weightx = 2.0;
-        gridBagConstraints.weighty = 2.0;
         gridBagConstraints.insets = new java.awt.Insets(0, 20, 150, 20);
         JPanelAsfalto.add(jPanelPosicaoGateOUT, gridBagConstraints);
+
+        jPanelRuaGateIn.setLayout(new javax.swing.BoxLayout(jPanelRuaGateIn, javax.swing.BoxLayout.LINE_AXIS));
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
+        gridBagConstraints.weightx = 2.0;
+        gridBagConstraints.weighty = 50.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 20, 0, 20);
+        JPanelAsfalto.add(jPanelRuaGateIn, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -169,6 +190,34 @@ public class Patio extends javax.swing.JFrame {
         });
     }
 
+    public boolean addCaminhao(int x, int y, Caminhao caminhao) {
+//        ImageIcon icon = new ImageIcon("\\images\\caminhaoVazio.jpg"); //Somente esta linha foi alterada
+        //icon.setImage(icon.getImage().getScaledInstance(50, 25, 100));
+        try {
+            BufferedImage bi = ImageIO.read(new File("C:\\Users\\5922496.UNIVALI\\Documents\\NetBeansProjects\\SimPortuarioMA\\SimPortuarioMA\\src\\images\\caminhaoVazio.jpg"));
+            Graphics2D g = (Graphics2D) bi.getGraphics();
+            g.rotate(Math.toRadians(45), 26, 26);
+            g.drawImage(bi, 0, 0, null);
+            ImageIcon icon = new ImageIcon(bi);
+            icon.setImage(icon.getImage().getScaledInstance(100, 50, 100));
+            JLabel truckView = new JLabel(icon);
+            truckView.setBounds(x, y, truckView.getWidth(), truckView.getHeight());
+            caminhao.setTruckView(truckView);
+            truckView.setVisible(true);
+            this.getjPanelRuaGateIn().add(truckView);
+            this.repaint();
+            this.revalidate();
+            return true;
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            return false;
+        }
+    }
+
+    public JPanel getjPanelRuaGateIn() {
+        return jPanelRuaGateIn;
+    }
+
     public JPanel getJPanelAsfalto() {
         return JPanelAsfalto;
     }
@@ -191,5 +240,6 @@ public class Patio extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelAgua;
     private javax.swing.JPanel jPanelPosicaoGateIN;
     private javax.swing.JPanel jPanelPosicaoGateOUT;
+    private javax.swing.JPanel jPanelRuaGateIn;
     // End of variables declaration//GEN-END:variables
 }

@@ -49,11 +49,13 @@ public class MainAgent extends Agent {
             @Override
             protected void onTick() {
                 System.out.println("Novo caminhão chegando....");
-                caminhoes.add(
-                        new Caminhao(core.getCores().get(new Random().nextInt(core.cores.size())),
+                Caminhao caminhao = new Caminhao(core.getCores().get(new Random().nextInt(core.cores.size())),
                                 new Container(navios.get(
-                                        new Random().nextInt(navios.size() - 1)), core.getCores().get(new Random().nextInt(core.cores.size())))));
-            patio.getjPanelPosicaoGateIN().setBackground(core.getCores().get(new Random().nextInt(core.cores.size())));
+                                        new Random().nextInt(navios.size() - 1)), core.getCores().get(new Random().nextInt(core.cores.size()))));
+                caminhoes.add(caminhao);
+                        
+//            patio.getjPanelPosicaoGateIN().setBackground(core.getCores().get(new Random().nextInt(core.cores.size())));
+              patio.addCaminhao(caminhoes.size() * 50, 10, caminhao);
             }
 
         });

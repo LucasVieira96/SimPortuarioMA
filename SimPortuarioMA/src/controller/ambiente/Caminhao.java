@@ -7,6 +7,7 @@ package controller.ambiente;
 
 import java.awt.Color;
 import java.util.Random;
+import javax.swing.JLabel;
 
 /**
  *
@@ -18,6 +19,15 @@ public class Caminhao {
     private Color cor;
     private Container container;
     private boolean carregado = false;
+    private JLabel truckView;
+
+    public JLabel getTruckView() {
+        return truckView;
+    }
+
+    public void setTruckView(JLabel truckView) {
+        this.truckView = truckView;
+    }
 
     public Caminhao(String placa, Color cor, Container container) {
 
