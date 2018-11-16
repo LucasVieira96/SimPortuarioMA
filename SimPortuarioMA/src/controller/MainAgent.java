@@ -23,7 +23,6 @@ import view.Patio;
 public class MainAgent extends Agent {
     private Core core;
     private Patio patio;
-    private List<Caminhao> caminhoes = new ArrayList<>();
     private List<Navio> navios = new ArrayList<>();
 
     @Override
@@ -45,17 +44,18 @@ public class MainAgent extends Agent {
 
     private void createChegadaCaminhaoBehavior() {
 
-        addBehaviour(new TickerBehaviour(this, 1000) {
+        addBehaviour(new TickerBehaviour(this, 10000) {
             @Override
             protected void onTick() {
+                System.out.println("Tick: " + this.getTickCount());
                 System.out.println("Novo caminhão chegando....");
                 Caminhao caminhao = new Caminhao(core.getCores().get(new Random().nextInt(core.cores.size())),
                                 new Container(navios.get(
                                         new Random().nextInt(navios.size() - 1)), core.getCores().get(new Random().nextInt(core.cores.size()))));
-                caminhoes.add(caminhao);
-                        
+//                .add(caminhao);
+            
 //            patio.getjPanelPosicaoGateIN().setBackground(core.getCores().get(new Random().nextInt(core.cores.size())));
-              patio.addCaminhao(caminhoes.size() * 50, 10, caminhao);
+//              patio.addCaminhao(caminhoes.size() * 50, 10, caminhao);
             }
 
         });

@@ -26,12 +26,16 @@ public class Main {
         List<Object> argumentos = new ArrayList<>();
         argumentos.add(patio);
         try {
-            Runtime rt = Runtime.instance();
-            Profile p = new ProfileImpl();
-            ContainerController cc = rt.createMainContainer(p);
-            AgentController ac = cc.createNewAgent("Main", "controller.MainAgent", argumentos.toArray());
-            AgentController rma = cc.createNewAgent("rma", "jade.tools.rma.rma", args);
-            ac.start();
+            Runtime runtime = Runtime.instance();
+            Profile profile = new ProfileImpl();
+            ContainerController containerController = runtime.createMainContainer(profile);
+            AgentController agentMain = containerController.createNewAgent("Main", "controller.MainAgent", argumentos.toArray());
+            AgentController agentGate = containerController.createNewAgent("Gate", "controller.agentes.AgentGate", argumentos.toArray());
+            AgentController agentRTG = containerController.createNewAgent("RTG", "controller.MainAgent", argumentos.toArray());
+            AgentController agentReachStacker = containerController.createNewAgent("ReachStacker", "controller.MainAgent", argumentos.toArray());
+            AgentController rma = containerController.createNewAgent("rma", "jade.tools.rma.rma", args);
+            agentMain.start();
+            agentGate.start();
             rma.start();
         } catch (StaleProxyException e) {
             System.out.println("Erro: " + e.getMessage());

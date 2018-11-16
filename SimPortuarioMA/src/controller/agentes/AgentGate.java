@@ -5,14 +5,21 @@
  */
 package controller.agentes;
 
+import controller.ambiente.Caminhao;
 import jade.core.Agent;
+import jade.core.behaviours.Behaviour;
+import jade.core.behaviours.CyclicBehaviour;
 import jade.util.leap.Iterator;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author Lucas
  */
 public class AgentGate extends Agent{
+    
+    List <Caminhao> caminhoes = new ArrayList();
     
     protected void setup(){
         System.out.println("Olá. Eu sou um agente!");
@@ -24,6 +31,26 @@ public class AgentGate extends Agent{
         while (it.hasNext()) {
             System.out.println("- " + it.next());
         }
+        addBehaviour(new CyclicBehaviour(this) {
+            @Override
+            public void action() {
+                if(caminhoes.size() > 0){
+                    System.out.println("Atendendo um caminhão!");
+                }else{
+                    System.out.println("Fila do Gate livre!");
+                    block(5000);
+                    System.out.println("Verificando se existem caminhões na fila");
+                }
+            }
+        });
+    }
+
+    public List<Caminhao> getCaminhoes() {
+        return caminhoes;
+    }
+
+    public void addCaminhaoFila(Caminhao caminhao) {
+        this.caminhoes.add(caminhao);
     }
     
 }
