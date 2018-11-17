@@ -18,12 +18,12 @@ import javax.swing.JPanel;
  *
  * @author Lucas
  */
-public class Patio extends javax.swing.JFrame {
+public class PatioView extends javax.swing.JFrame {
 
     /**
      * Creates new form Patio
      */
-    public Patio() {
+    public PatioView() {
         initComponents();
         this.setExtendedState(MAXIMIZED_BOTH);
     }
@@ -50,9 +50,7 @@ public class Patio extends javax.swing.JFrame {
         jPanelRuaGateIn = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(600, 400));
-        setPreferredSize(new java.awt.Dimension(800, 600));
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         jPanelAgua.setBackground(new java.awt.Color(33, 100, 163));
@@ -169,14 +167,18 @@ public class Patio extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Patio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PatioView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Patio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PatioView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Patio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PatioView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Patio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PatioView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -185,7 +187,7 @@ public class Patio extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Patio().setVisible(true);
+                new PatioView().setVisible(true);
             }
         });
     }

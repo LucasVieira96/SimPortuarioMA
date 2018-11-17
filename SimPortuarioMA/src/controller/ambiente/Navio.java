@@ -5,6 +5,7 @@
  */
 package controller.ambiente;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -13,7 +14,7 @@ import java.util.Random;
  *
  * @author Lucas
  */
-public class Navio {
+public class Navio implements Serializable{
 
     private final String nomeNavio;
     private final Integer qtdMaxContainer;

@@ -6,6 +6,7 @@
 package controller.ambiente;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.Random;
 import javax.swing.JLabel;
 
@@ -13,13 +14,21 @@ import javax.swing.JLabel;
  *
  * @author Lucas
  */
-public class Caminhao {
+public class Caminhao implements Serializable{
 
+    //STATUS CAMINHÃO
+    public static final int FILA_GATE = 0;
+    public static final int NO_GATE = 1;
+    public static final int LIBERADO_GATE = 2;
+    public static final int AGUARDANDO_STACKER = 3;
+    public static final int LIBERADO_STACKER = 4;
+    
     private String placa;
     private Color cor;
     private Container container;
     private boolean carregado = false;
     private JLabel truckView;
+    private int status;
 
     public JLabel getTruckView() {
         return truckView;
@@ -29,8 +38,9 @@ public class Caminhao {
         this.truckView = truckView;
     }
 
-    public Caminhao(String placa, Color cor, Container container) {
+    public Caminhao(String placa, Color cor, Container container, int status) {
 
+        this.status = status;
         this.placa = placa;
         this.cor = cor;
         this.container = container;
@@ -41,8 +51,16 @@ public class Caminhao {
         }
     }
 
-    public Caminhao(Color cor, Container container) {
-        this(gerarPlaca(), cor, container);
+    public Caminhao(Color cor, Container container, int status) {
+        this(gerarPlaca(), cor, container, status);
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public Container descarregaContainer() {
@@ -75,7 +93,11 @@ public class Caminhao {
     public void setContainer(Container container) {
         if (!carregado) {
             this.container = container;
-            this.carregado = true;
+            if(container != null){
+               this.carregado = true;
+            }else{
+                this.carregado = false;
+            }
         }
     }
 

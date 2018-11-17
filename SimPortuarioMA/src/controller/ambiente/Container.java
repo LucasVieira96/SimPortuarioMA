@@ -6,13 +6,14 @@
 package controller.ambiente;
 
 import java.awt.Color;
+import java.io.Serializable;
 import java.util.Random;
 
 /**
  *
  * @author Lucas
  */
-public class Container {
+public class Container implements Serializable{
 
     private String numeracao;
     private Navio navioDestino;
