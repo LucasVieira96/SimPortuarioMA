@@ -62,7 +62,6 @@ public class AgentReachStacker extends Agent {
                             System.out.println(getAID().getLocalName() + ": Caminhão recebido!");
                         }
                         if (container != null) {
-                            myAgent.doWait(5000);
                             if (pilha.pushContainer(container,
                                     new Random().nextInt(pilha.getWidth()),
                                     new Random().nextInt(pilha.getHeight()))) {

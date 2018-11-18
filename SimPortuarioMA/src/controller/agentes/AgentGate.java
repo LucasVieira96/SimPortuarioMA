@@ -61,6 +61,7 @@ public class AgentGate extends Agent {
                                     atendendo = filaGate.get(0);
                                     atendendo.setStatus(Caminhao.NO_GATE);
                                     filaGate.remove(0);
+                                    myAgent.doWait(4000);
                                 } else {
                                     System.out.println("Fila do Gate livre!");
                                 }
