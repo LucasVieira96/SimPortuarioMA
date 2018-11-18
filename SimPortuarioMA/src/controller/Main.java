@@ -49,6 +49,6 @@ public class Main {
         } catch (StaleProxyException e) {
             System.out.println("Erro: " + e.getMessage());
         }
-//        patio.setVisible(true);
+        patio.setVisible(true);
     }
 }

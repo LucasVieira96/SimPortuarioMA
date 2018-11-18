@@ -13,11 +13,17 @@ import java.util.Random;
  *
  * @author Lucas
  */
-public class Container implements Serializable{
+public class Container implements Serializable {
+
+    //STATUS CAMINHÃO
+    public static final int NO_CAMINHAO = 1;
+    public static final int AGUARDANDO_DESCARREGAR = 2;
+    public static final int DESCARREGADO = 3;
 
     private String numeracao;
     private Navio navioDestino;
     private Color cor;
+    private int status;
 
     public Container(Navio navioDestino, Color cor) {
         this(gerarNumeracao(), navioDestino, cor);
@@ -27,6 +33,7 @@ public class Container implements Serializable{
         this.numeracao = numeracao;
         this.navioDestino = navioDestino;
         this.cor = cor;
+        this.status = NO_CAMINHAO;
     }
 
     public String getNumeracao() {
@@ -51,6 +58,14 @@ public class Container implements Serializable{
 
     public void setCor(Color cor) {
         this.cor = cor;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     private static String gerarNumeracao() {

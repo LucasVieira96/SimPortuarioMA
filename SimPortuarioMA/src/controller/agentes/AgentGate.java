@@ -6,14 +6,20 @@
 package controller.agentes;
 
 import controller.ambiente.Caminhao;
+import controller.behaviours.DelayBehaviour;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.util.leap.Iterator;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import view.PatioView;
 
 /**
  *
@@ -22,10 +28,13 @@ import java.util.List;
 public class AgentGate extends Agent {
 
     List<Caminhao> filaGate = new ArrayList();
+    private PatioView patio;
     Caminhao atendendo = null;
     Caminhao caminhao = null;
 
     protected void setup() {
+
+        patio = (PatioView) this.getArguments()[0];
         System.out.println("Olá. Eu sou um agente!");
         System.out.println("Todas as minhas informações: \n" + getAID());
         System.out.println("Meu nome local é: " + getAID().getLocalName());
@@ -51,16 +60,16 @@ public class AgentGate extends Agent {
                                     + "\nPlaca: " + caminhao.getPlaca()
                                     + "\nContainer: " + caminhao.getContainer().getNumeracao());
                             filaGate.add(caminhao);
+                            patio.addCaminhaoFila(caminhao);
                             System.out.println("Caminhões na Fila: " + filaGate.size());
                         }
                         if (filaGate.size() > 0) {
                             if (atendendo == null) {
                                 if (filaGate.size() > 0) {
-                                    System.out.println(getAID().getLocalName() + ": Atendendo um caminhão!");
-                                    System.out.println("Falta(m) " + filaGate.size() + " para ser(em) atendido(s)!");
                                     atendendo = filaGate.get(0);
                                     atendendo.setStatus(Caminhao.NO_GATE);
-                                    filaGate.remove(0);
+                                    System.out.println(getAID().getLocalName() + ": Atendendo um caminhão! - " + atendendo.getPlaca());
+                                    System.out.println("Falta(m) " + filaGate.size() + " para ser(em) atendido(s)!");
                                 } else {
                                     System.out.println("Fila do Gate livre!");
                                 }
@@ -69,14 +78,26 @@ public class AgentGate extends Agent {
                     }
                     if (msgReachStacker != null) {
                         ACLMessage reply = msgReachStacker.createReply();
-                        if (caminhao != null) {
-                            if (msgReachStacker.getOntology().equalsIgnoreCase("Permitido")) {
-                                reply.setOntology("Enviando");
-                                reply.setContentObject(caminhao);
-                                System.out.println(getAID().getLocalName() + ": Liberando Caminhão!");
-                                myAgent.send(reply);
-                                atendendo = null;
-                            }
+                        if (atendendo != null) {
+                            addBehaviour(new DelayBehaviour(myAgent, TimeUnit.SECONDS.toMillis(1)) {
+                                @Override
+                                public void executeAfterTimeOut() {
+                                    if (msgReachStacker.getOntology().equalsIgnoreCase("Permitido")) {
+                                        try {
+                                            reply.setOntology("Enviando");
+                                            reply.setContentObject(atendendo);
+                                            filaGate.remove(atendendo);
+                                            patio.removerCaminhaoFila(atendendo);
+                                            System.out.println(getAID().getLocalName() + ": Liberando Caminhão! - " + atendendo.getPlaca());
+                                            myAgent.send(reply);
+                                            atendendo = null;
+                                            removeBehaviour(this);
+                                        } catch (IOException ex) {
+                                            Logger.getLogger(AgentGate.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                                    }
+                                }
+                            });
                         }
                     } else {
                         if (atendendo != null) {
@@ -105,9 +126,4 @@ public class AgentGate extends Agent {
     public List<Caminhao> getCaminhoes() {
         return filaGate;
     }
-
-    public void addCaminhaoFila(Caminhao caminhao) {
-        this.filaGate.add(caminhao);
-    }
-
 }

@@ -41,7 +41,7 @@ public class MainAgent extends Agent {
         navios.add(new Navio());
         this.createChegadaCaminhaoBehavior();
 //        patio.setVisible(true);
-        patio.getjPanelPosicaoGateIN().setBackground(Color.red);
+//        patio.getjPanelPosicaoGateIN().setBackground(Color.red);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class MainAgent extends Agent {
 
     private void createChegadaCaminhaoBehavior() {
 
-        addBehaviour(new TickerBehaviour(this, 10000) {
+        addBehaviour(new TickerBehaviour(this, 5000) {
             @Override
             protected void onTick() {
                 System.out.println("Tick: " + this.getTickCount());

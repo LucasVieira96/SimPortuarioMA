@@ -8,13 +8,16 @@ package controller.agentes;
 import controller.ambiente.Caminhao;
 import controller.ambiente.Container;
 import controller.ambiente.PilhaContainer;
+import controller.behaviours.DelayBehaviour;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.CyclicBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
+import jade.lang.acl.UnreadableException;
 import jade.util.leap.Iterator;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -47,7 +50,8 @@ public class AgentReachStacker extends Agent {
                     if (msg != null) {
                         ACLMessage reply = msg.createReply();
                         if (msg.getOntology().equalsIgnoreCase("Permissão")) {
-                            if (container == null) {
+                            if (container == null && caminhao == null
+                                    || caminhao.getStatus() == Caminhao.LIBERADO_STACKER) {
                                 reply.setContent(getAID().getLocalName() + ": Pode mandar");
                                 reply.setOntology("Permitido");
                             } else {
@@ -59,30 +63,41 @@ public class AgentReachStacker extends Agent {
                             caminhao = (Caminhao) msg.getContentObject();
                             container = caminhao.getContainer();
                             caminhao.setStatus(Caminhao.AGUARDANDO_STACKER);
-                            System.out.println(getAID().getLocalName() + ": Caminhão recebido!");
+                            System.out.println(getAID().getLocalName() + ": Caminhão recebido! - " + caminhao.getPlaca());
                         }
-                        if (container != null) {
-                            myAgent.doWait(5000);
-                            if (pilha.pushContainer(container,
-                                    new Random().nextInt(pilha.getWidth()),
-                                    new Random().nextInt(pilha.getHeight()))) {
-                                container = null;
-                                caminhao.setContainer(null);
-                                caminhao.setStatus(Caminhao.LIBERADO_STACKER);
-                                System.out.println(getAID().getLocalName() + ": Caminhão liberado!");
-                            }else{
-                                if(pilha.getCapacidade() <= 0){
-                                    System.out.println(getAID().getLocalName() 
-                                            + ": A pilha esta cheia!");
-                                    System.out.println(getAID().getLocalName() 
-                                            + ": Aguardando liberação de espaço na pilha!\n");
+                        if (container != null && container.getStatus() == Container.NO_CAMINHAO) {
+
+                            container.setStatus(Container.AGUARDANDO_DESCARREGAR);
+
+                            System.out.println(getAID().getLocalName()
+                                    + ": Descarregando container! - " + container.getNumeracao());
+
+                            addBehaviour(new DelayBehaviour(myAgent, TimeUnit.SECONDS.toMillis(5)) {
+                                @Override
+                                public void executeAfterTimeOut() {
+                                    if (pilha.pushContainer(container,
+                                            new Random().nextInt(pilha.getWidth()),
+                                            new Random().nextInt(pilha.getHeight()))) {
+                                        System.out.println(getAID().getLocalName()
+                                                + ": Container descarregado! - " + container.getNumeracao());
+                                        container = null;
+                                        caminhao.setContainer(null);
+                                        caminhao.setStatus(Caminhao.LIBERADO_STACKER);
+                                        System.out.println(getAID().getLocalName() + ": Caminhão liberado! - " + caminhao.getPlaca());
+                                        removeBehaviour(this);
+                                    } else {
+                                        if (pilha.getCapacidade() <= 0) {
+                                            System.out.println(getAID().getLocalName()
+                                                    + ": A pilha esta cheia!");
+                                            System.out.println(getAID().getLocalName()
+                                                    + ": Aguardando liberação de espaço na pilha!\n");
+                                        }
+                                    }
                                 }
-                            }
+                            });
                         }
-                    } else {
-                        block(5000);
                     }
-                } catch (Exception ex) {
+                } catch (UnreadableException ex) {
                     System.err.println("Erro no agente ReachStacker:\n" + ex);
                 }
             }
