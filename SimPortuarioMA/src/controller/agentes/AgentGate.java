@@ -68,8 +68,10 @@ public class AgentGate extends Agent {
                                 if (filaGate.size() > 0) {
                                     atendendo = filaGate.get(0);
                                     atendendo.setStatus(Caminhao.NO_GATE);
+
                                     System.out.println(getAID().getLocalName() + ": Atendendo um caminhão! - " + atendendo.getPlaca());
                                     System.out.println("Falta(m) " + filaGate.size() + " para ser(em) atendido(s)!");
+
                                 } else {
                                     System.out.println("Fila do Gate livre!");
                                 }

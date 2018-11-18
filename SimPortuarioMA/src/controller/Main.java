@@ -5,6 +5,7 @@
  */
 package controller;
 
+import controller.ambiente.MapaPilha;
 import controller.ambiente.PilhaContainer;
 import jade.core.Runtime;
 import jade.core.Profile;
@@ -23,16 +24,18 @@ import view.PatioView;
 public class Main {
 
     public static void main(String[] args) {
-        PatioView patio = new PatioView();
-        PilhaContainer pilhaArmazenagem = new PilhaContainer(5, 5, 6);
-        PilhaContainer pilhaNavio = new PilhaContainer(
-                pilhaArmazenagem.getWidth(), 
-                pilhaArmazenagem.getHeight(), 
+        final PatioView patio = new PatioView();
+        final PilhaContainer pilhaArmazenagem = new PilhaContainer(5, 5, 6);
+        final PilhaContainer pilhaNavio = new PilhaContainer(
+                pilhaArmazenagem.getWidth(),
+                pilhaArmazenagem.getHeight(),
                 pilhaArmazenagem.getAlturaMaxima());
+        final List<MapaPilha> cntrSelecionados = new ArrayList<MapaPilha>();
         List<Object> argumentos = new ArrayList<>();
         argumentos.add(patio);
         argumentos.add(pilhaArmazenagem);
         argumentos.add(pilhaNavio);
+        argumentos.add(cntrSelecionados);
         try {
             Runtime runtime = Runtime.instance();
             Profile profile = new ProfileImpl();
@@ -45,6 +48,7 @@ public class Main {
             agentMain.start();
             agentGate.start();
             agentReachStacker.start();
+            agentRTG.start();
             rma.start();
         } catch (StaleProxyException e) {
             System.out.println("Erro: " + e.getMessage());

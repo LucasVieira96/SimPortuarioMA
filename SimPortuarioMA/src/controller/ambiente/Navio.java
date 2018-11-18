@@ -56,6 +56,16 @@ public class Navio implements Serializable{
         return false;
     }
 
+    public String getNomeNavio() {
+        return nomeNavio;
+    }
+
+    public Integer getQtdMaxContainer() {
+        return qtdMaxContainer;
+    }
+    
+    
+
     private static String gerarNomeNavio() {
         int leftLimit = 65; // letter 'a'
         int rightLimit = 90; // letter 'z'

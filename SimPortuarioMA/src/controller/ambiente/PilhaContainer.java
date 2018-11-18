@@ -15,7 +15,7 @@ import java.util.Stack;
  */
 public class PilhaContainer {
     
-    private final List<Container> mapaPilha;
+    private final List<MapaPilha> mapaPilha;
     private final Integer height;
     private final Integer width;
     private final Stack<Container>[][] pilha;
@@ -45,15 +45,22 @@ public class PilhaContainer {
     public boolean pushContainer(Container container, Integer height, Integer width) {
         if (pilha[width][height].size() <= alturaMaxima) {
             pilha[width][height].push(container);
+            mapaPilha.add(new MapaPilha(width, height, container));
             capacidade ++;
             return true;
         }
         return false;
     }
 
-    public Container popContainer (Integer weight, Integer height){
+    public Container popContainer (Integer width, Integer height){
         capacidade --;
-        return pilha[height][weight].pop();
+        for (int i = 0; i < mapaPilha.size(); i++) {
+            MapaPilha mapa = mapaPilha.get(i);
+            if(mapa.getPosWidth() == width && mapa.getPosHeight() == height){
+                mapaPilha.remove(i);
+            }
+        }
+        return pilha[height][width].pop();
     }
 
     public Stack<Container>[][] getPilha() {
@@ -72,7 +79,7 @@ public class PilhaContainer {
         return alturaMaxima;
     }
 
-    public List<Container> getMapaPilha() {
+    public List<MapaPilha> getMapaPilha() {
         return mapaPilha;
     }
 

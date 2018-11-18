@@ -65,6 +65,7 @@ public class AgentReachStacker extends Agent {
                             caminhao.setStatus(Caminhao.AGUARDANDO_STACKER);
                             System.out.println(getAID().getLocalName() + ": Caminhão recebido! - " + caminhao.getPlaca());
                         }
+                        
                         if (container != null && container.getStatus() == Container.NO_CAMINHAO) {
 
                             container.setStatus(Container.AGUARDANDO_DESCARREGAR);
@@ -93,6 +94,7 @@ public class AgentReachStacker extends Agent {
                                                     + ": Aguardando liberação de espaço na pilha!\n");
                                         }
                                     }
+
                                 }
                             });
                         }
