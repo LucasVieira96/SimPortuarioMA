@@ -37,7 +37,6 @@ public abstract class DelayBehaviour extends SimpleBehaviour {
         } else {
             block(dt);
         }
-
     }
 
     public abstract void executeAfterTimeOut();

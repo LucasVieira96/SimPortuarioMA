@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import jdk.nashorn.internal.runtime.arrays.ArrayData;
 
 /**
@@ -50,8 +51,11 @@ public class PatioView extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         JPanelAsfalto = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         filaCaminhoesJList = new javax.swing.JList<>();
+        jLabel2 = new javax.swing.JLabel();
+        jTextFieldGate = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(800, 600));
@@ -89,20 +93,47 @@ public class PatioView extends javax.swing.JFrame {
         JPanelAsfalto.setPreferredSize(new java.awt.Dimension(600, 400));
         JPanelAsfalto.setLayout(new java.awt.GridBagLayout());
 
-        jPanel1.setPreferredSize(new java.awt.Dimension(100, 300));
+        jPanel1.setToolTipText("");
+        jPanel1.setPreferredSize(new java.awt.Dimension(100, 350));
+        jPanel1.setLayout(new java.awt.GridBagLayout());
+
+        jLabel1.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Fila");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.weightx = 1.0;
+        jPanel1.add(jLabel1, gridBagConstraints);
 
         jScrollPane1.setViewportView(filaCaminhoesJList);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 10.0;
+        jPanel1.add(jScrollPane1, gridBagConstraints);
+
+        jLabel2.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Gate");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.weightx = 1.0;
+        jPanel1.add(jLabel2, gridBagConstraints);
+
+        jTextFieldGate.setEditable(false);
+        jTextFieldGate.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldGate.setText("LIVRE");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        jPanel1.add(jTextFieldGate, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
@@ -185,6 +216,20 @@ public class PatioView extends javax.swing.JFrame {
         }
     }
 
+    public synchronized boolean setCaminhaoGate(Caminhao caminhao) {
+        try {
+            if (caminhao == null) {
+                getJTextFieldGate().setText("Livre");
+            } else {
+                getJTextFieldGate().setText(caminhao.getPlaca());
+            }
+            return true;
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            return false;
+        }
+    }
+
 //    private void updateGateList() {
 //        DefaultListModel model = new DefaultListModel();
 //        for (int i = 0; i < filaCaminhoesVector.size(); i++) {
@@ -196,6 +241,10 @@ public class PatioView extends javax.swing.JFrame {
 //    }
     public JList<String> getFilaCaminhoesJList() {
         return filaCaminhoesJList;
+    }
+
+    public JTextField getJTextFieldGate() {
+        return jTextFieldGate;
     }
 
     public JPanel getJPanelAsfalto() {
@@ -212,9 +261,12 @@ public class PatioView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel JPanelAsfalto;
     private javax.swing.JList<String> filaCaminhoesJList;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanelAgua;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField jTextFieldGate;
     // End of variables declaration//GEN-END:variables
 }
