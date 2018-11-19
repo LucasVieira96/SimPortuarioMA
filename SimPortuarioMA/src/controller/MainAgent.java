@@ -48,7 +48,7 @@ public class MainAgent extends Agent {
         this.core = new Core();
         System.out.println("Main Agent setup");
         navios.add(new Navio());
-        navios.add(new Navio());
+//        navios.add(new Navio());
         navios.add(new Navio());
         this.createChegadaCaminhaoBehavior();
 //        patio.setVisible(true);
@@ -68,8 +68,8 @@ public class MainAgent extends Agent {
                 System.out.println("Tick: " + this.getTickCount());
                 System.out.println("Novo caminhão chegando....");
                 Caminhao caminhao = new Caminhao(core.getCores().get(new Random().nextInt(core.cores.size())),
-                        new Container(navios.get( new Random().nextInt(navios.size() - 1)), 
-                                core.getCores().get(new Random().nextInt(core.cores.size()-1))),
+                        new Container(navios.get( new Random().nextInt(navios.size())), 
+                                core.getCores().get(new Random().nextInt(core.cores.size()))),
                         Caminhao.FILA_GATE);
                 //adicionar animacao chegada caminhao
                 informaGateNovoCaminhao(caminhao);
@@ -100,7 +100,7 @@ public class MainAgent extends Agent {
                 navioEmAtendimento = selecionaNavio();
                 navios.remove(navioEmAtendimento);
                 for (MapaPilha mapa : pilha.getMapaPilha()) {
-                    if(mapa.getContainer().getNavioDestino().equals(navioEmAtendimento.getNomeNavio())){
+                    if(mapa.getContainer().getNavioDestino().getNomeNavio().equals(navioEmAtendimento.getNomeNavio())){
                         cntrSelecionados.add(mapa);
                     }
                 }

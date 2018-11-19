@@ -72,6 +72,7 @@ public class AgentRTG extends Agent {
                                 }
                             }
                         }
+                        System.out.println(getAID().getLocalName() + ": Finalizando a operação!");
                     }
                 }
             }
