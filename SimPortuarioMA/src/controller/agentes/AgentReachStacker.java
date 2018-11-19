@@ -18,6 +18,7 @@ import jade.lang.acl.UnreadableException;
 import jade.util.leap.Iterator;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import view.PatioView;
 
 /**
  *
@@ -26,11 +27,13 @@ import java.util.concurrent.TimeUnit;
 public class AgentReachStacker extends Agent {
 
     PilhaContainer pilha = null;
+    private PatioView patio;
     Container container;
     Caminhao caminhao;
 
     @Override
     protected void setup() {
+        patio = (PatioView) this.getArguments()[0];
         System.out.println("Olá. Eu sou um agente!");
         System.out.println("Todas as minhas informações: \n" + getAID());
         System.out.println("Meu nome local é: " + getAID().getLocalName());
@@ -63,9 +66,10 @@ public class AgentReachStacker extends Agent {
                             caminhao = (Caminhao) msg.getContentObject();
                             container = caminhao.getContainer();
                             caminhao.setStatus(Caminhao.AGUARDANDO_STACKER);
+                            patio.setCaminhaoReachStacker(caminhao);
                             System.out.println(getAID().getLocalName() + ": Caminhão recebido! - " + caminhao.getPlaca());
                         }
-                        
+
                         if (container != null && container.getStatus() == Container.NO_CAMINHAO) {
 
                             container.setStatus(Container.AGUARDANDO_DESCARREGAR);
@@ -84,6 +88,7 @@ public class AgentReachStacker extends Agent {
                                         container = null;
                                         caminhao.setContainer(null);
                                         caminhao.setStatus(Caminhao.LIBERADO_STACKER);
+                                        patio.setCaminhaoReachStacker(null);
                                         System.out.println(getAID().getLocalName() + ": Caminhão liberado! - " + caminhao.getPlaca());
                                         removeBehaviour(this);
                                     } else {

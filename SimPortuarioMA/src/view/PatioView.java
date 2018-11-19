@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Vector;
 import javax.imageio.ImageIO;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -35,6 +36,8 @@ public class PatioView extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         setAlwaysOnTop(true);
         filaCaminhoesJList.setModel(filaCaminhoesVector);
+        DefaultListCellRenderer renderer = (DefaultListCellRenderer) filaCaminhoesJList.getCellRenderer();
+        renderer.setHorizontalAlignment(JLabel.CENTER);
     }
 
     /**
@@ -56,6 +59,9 @@ public class PatioView extends javax.swing.JFrame {
         filaCaminhoesJList = new javax.swing.JList<>();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldGate = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jTextFieldReachStacker = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(800, 600));
@@ -91,7 +97,7 @@ public class PatioView extends javax.swing.JFrame {
         JPanelAsfalto.setMaximumSize(new java.awt.Dimension(800, 600));
         JPanelAsfalto.setMinimumSize(new java.awt.Dimension(800, 400));
         JPanelAsfalto.setPreferredSize(new java.awt.Dimension(600, 400));
-        JPanelAsfalto.setLayout(new java.awt.GridBagLayout());
+        JPanelAsfalto.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setToolTipText("");
         jPanel1.setPreferredSize(new java.awt.Dimension(100, 350));
@@ -135,11 +141,32 @@ public class PatioView extends javax.swing.JFrame {
         gridBagConstraints.weightx = 1.0;
         jPanel1.add(jTextFieldGate, gridBagConstraints);
 
+        JPanelAsfalto.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, -1, -1));
+
+        jPanel2.setLayout(new java.awt.GridBagLayout());
+
+        jLabel4.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Reach Stacker");
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.SOUTHWEST;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.weightx = 1.0;
         gridBagConstraints.weighty = 1.0;
-        JPanelAsfalto.add(jPanel1, gridBagConstraints);
+        jPanel2.add(jLabel4, gridBagConstraints);
+
+        jTextFieldReachStacker.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldReachStacker.setText("LIVRE");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanel2.add(jTextFieldReachStacker, gridBagConstraints);
+
+        JPanelAsfalto.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 140, 40));
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -219,9 +246,23 @@ public class PatioView extends javax.swing.JFrame {
     public synchronized boolean setCaminhaoGate(Caminhao caminhao) {
         try {
             if (caminhao == null) {
-                getJTextFieldGate().setText("Livre");
+                getJTextFieldGate().setText("LIVRE");
             } else {
                 getJTextFieldGate().setText(caminhao.getPlaca());
+            }
+            return true;
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            return false;
+        }
+    }
+
+    public synchronized boolean setCaminhaoReachStacker(Caminhao caminhao) {
+        try {
+            if (caminhao == null) {
+                getJTextFieldReachStacker().setText("LIVRE");
+            } else {
+                getJTextFieldReachStacker().setText(caminhao.getPlaca());
             }
             return true;
         } catch (Exception ex) {
@@ -241,6 +282,10 @@ public class PatioView extends javax.swing.JFrame {
 //    }
     public JList<String> getFilaCaminhoesJList() {
         return filaCaminhoesJList;
+    }
+
+    public JTextField getJTextFieldReachStacker() {
+        return jTextFieldReachStacker;
     }
 
     public JTextField getJTextFieldGate() {
@@ -264,9 +309,12 @@ public class PatioView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelAgua;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextFieldGate;
+    private javax.swing.JTextField jTextFieldReachStacker;
     // End of variables declaration//GEN-END:variables
 }

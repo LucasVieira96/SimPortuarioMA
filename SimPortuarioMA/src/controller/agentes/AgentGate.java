@@ -26,14 +26,14 @@ import view.PatioView;
  * @author Lucas
  */
 public class AgentGate extends Agent {
-    
+
     List<Caminhao> filaGate = new ArrayList();
     private PatioView patio;
     Caminhao atendendo = null;
     Caminhao caminhao = null;
-    
+
     protected void setup() {
-        
+
         patio = (PatioView) this.getArguments()[0];
         System.out.println("Olá. Eu sou um agente!");
         System.out.println("Todas as minhas informações: \n" + getAID());
@@ -70,7 +70,8 @@ public class AgentGate extends Agent {
                                     atendendo.setStatus(Caminhao.NO_GATE);
                                     System.out.println(getAID().getLocalName() + ": Atendendo um caminhão! - " + atendendo.getPlaca());
                                     System.out.println("Falta(m) " + filaGate.size() + " para ser(em) atendido(s)!");
-                                    filaGate.remove(atendendo);                                    
+                                    filaGate.remove(atendendo);
+                                    patio.removerCaminhaoFila(atendendo);
                                     patio.setCaminhaoGate(atendendo);
                                 } else {
                                     System.out.println("Fila do Gate livre!");
@@ -88,7 +89,6 @@ public class AgentGate extends Agent {
                                         try {
                                             reply.setOntology("Enviando");
                                             reply.setContentObject(atendendo);
-                                            patio.removerCaminhaoFila(atendendo);
                                             System.out.println(getAID().getLocalName() + ": Liberando Caminhão! - " + atendendo.getPlaca());
                                             myAgent.send(reply);
                                             atendendo = null;
@@ -115,7 +115,7 @@ public class AgentGate extends Agent {
                             block();
                         }
                     }
-                    
+
                 } catch (Exception ex) {
                     System.err.println("Erro no agente GATE!\n" + ex);
                 }
@@ -124,7 +124,7 @@ public class AgentGate extends Agent {
         }
         );
     }
-    
+
     public List<Caminhao> getCaminhoes() {
         return filaGate;
     }
