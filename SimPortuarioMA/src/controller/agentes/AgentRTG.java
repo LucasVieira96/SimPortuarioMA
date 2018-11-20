@@ -53,15 +53,16 @@ public class AgentRTG extends Agent {
                     if (msg.getOntology().equalsIgnoreCase("Atracação Navio")) {
                         System.out.println(getAID().getLocalName() + ": Iniciando operação!");
                         for (MapaPilha cntrSelecionado : cntrSelecionados) {
-                            for (int i = 0;
-                                    i < pilha.getPilha()[cntrSelecionado.getPosWidth()]
-                                            [cntrSelecionado.getPosHeight()].size(); i++) {
+                            for (Container item : pilha.getPilha()[cntrSelecionado.getPosWidth()]
+                                    [cntrSelecionado.getPosHeight()]) {
                                 Container container = pilha.popContainer(
                                         cntrSelecionado.getPosWidth(),
                                         cntrSelecionado.getPosHeight());
-                                if (cntrSelecionado.getContainer() == container) {
+                                if (cntrSelecionado.getContainer().getNavioDestino().getNomeNavio().equals(container.getNavioDestino().getNomeNavio())
+                                        && cntrSelecionado.getContainer().getNumeracao().equals(container.getNumeracao())) {
                                     pilhaNavio.pushContainer(container, cntrSelecionado.getPosWidth(), cntrSelecionado.getPosHeight());
-                                    for (int j = 0; j < pilhaTemp.size(); j++) {
+                                    System.out.println(getAID().getLocalName() + ": Operando container - " + container.getNumeracao());
+                                    for (Container pilhaTemp1 : pilhaTemp) {
                                         pilha.pushContainer(pilhaTemp.pop(),
                                                 cntrSelecionado.getPosWidth(),
                                                 cntrSelecionado.getPosHeight());

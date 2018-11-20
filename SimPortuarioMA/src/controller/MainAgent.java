@@ -27,7 +27,7 @@ import view.PatioView;
  */
 public class MainAgent extends Agent {
 
-    private List<Navio> navios = new ArrayList<>();
+    private final List<Navio> navios = new ArrayList<>();
     private List<MapaPilha> cntrSelecionados;
     private Core core;
     private PilhaContainer pilha;
@@ -36,7 +36,8 @@ public class MainAgent extends Agent {
     //Parametros Main
     private int chegadaNavioTick = 10;
     private int partidaNavioTick = 30;
-    private int diferencaEntreAtracacaoNavios = 2;
+    private final int diferencaEntreAtracacaoNavios = 2;
+    private final int tempoTick = 5000;
     
     private PatioView patio;
     
@@ -62,7 +63,7 @@ public class MainAgent extends Agent {
 
     private void createChegadaCaminhaoBehavior() {
 
-        addBehaviour(new TickerBehaviour(this, 5000) {
+        addBehaviour(new TickerBehaviour(this, tempoTick) {
             @Override
             protected void onTick() {
                 System.out.println("Tick: " + this.getTickCount());

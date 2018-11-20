@@ -16,9 +16,20 @@ import java.util.Random;
  */
 public class Navio implements Serializable{
 
+    public static final int DESATRACADO = 0;
+    public static final int ATRACADO = 1;
     private final String nomeNavio;
     private final Integer qtdMaxContainer;
     private List<Container> containers;
+    private int status = DESATRACADO;
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 
     public Navio() {
         this(gerarNomeNavio(), 100 + new Random().nextInt(1900));
