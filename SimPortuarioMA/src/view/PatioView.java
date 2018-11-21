@@ -82,6 +82,10 @@ public class PatioView extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jPanelPilha02 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -233,6 +237,16 @@ public class PatioView extends javax.swing.JFrame {
 
         JPanelAsfalto.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 300, 190));
 
+        jPanel5.setLayout(new java.awt.GridBagLayout());
+
+        jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(153, 0, 0));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Tick: 0");
+        jPanel5.add(jLabel9, new java.awt.GridBagConstraints());
+
+        JPanelAsfalto.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 30));
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -241,12 +255,37 @@ public class PatioView extends javax.swing.JFrame {
         gridBagConstraints.weighty = 100.0;
         getContentPane().add(JPanelAsfalto, gridBagConstraints);
 
+        jPanel6.setBackground(new java.awt.Color(102, 102, 102));
+        jPanel6.setOpaque(false);
+
+        jLabel8.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/truck-vazio.png"))); // NOI18N
+
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/road.jpg"))); // NOI18N
         jLabel7.setText("\n");
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(jLabel8)
+                .addGap(611, 611, 611)
+                .addComponent(jLabel7))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel7)))
+        );
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 2;
-        getContentPane().add(jLabel7, gridBagConstraints);
+        getContentPane().add(jPanel6, gridBagConstraints);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -511,10 +550,14 @@ public class PatioView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanelAgua;
     private javax.swing.JPanel jPanelPilha01;
     private javax.swing.JPanel jPanelPilha02;
