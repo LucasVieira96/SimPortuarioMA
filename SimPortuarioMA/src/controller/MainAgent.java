@@ -27,11 +27,12 @@ import view.PatioView;
  * @author Lucas
  */
 public class MainAgent extends Agent {
-    
+
     private final List<Navio> navios = new ArrayList<>();
     private List<MapaPilha> cntrSelecionados;
     private Core core;
     private PilhaContainer pilha;
+    private PilhaContainer pilhaNavio;
     private Navio navioEmAtendimento;
 
     //Parametros Main
@@ -39,13 +40,14 @@ public class MainAgent extends Agent {
 //    private int partidaNavioTick = 30;
 //    private final int diferencaEntreAtracacaoNavios = 2;
     private final int tempoTick = 5000;
-    
+
     private PatioView patio;
-    
+
     @Override
     protected void setup() {
         patio = (PatioView) this.getArguments()[0];
         pilha = (PilhaContainer) getArguments()[1];
+        pilhaNavio = (PilhaContainer) getArguments()[2];
         cntrSelecionados = (List<MapaPilha>) this.getArguments()[3];
         this.core = new Core();
         System.out.println("Main Agent setup");
@@ -57,20 +59,20 @@ public class MainAgent extends Agent {
 //        patio.setVisible(true);
 //        patio.getjPanelPosicaoGateIN().setBackground(Color.red);
     }
-    
+
     @Override
     protected void takeDown() {
         System.out.println("Agente Main finalizado!");
     }
-    
+
     private void createNavioBehavior() {
-        
+
         addBehaviour(new TickerBehaviour(this, tempoTick) {
             @Override
             protected void onTick() {
                 MessageTemplate MT1 = MessageTemplate.MatchSender(new AID("RTG", AID.ISLOCALNAME));
                 ACLMessage msg = receive(MT1);
-                
+
                 if (msg != null) {
                     String content = msg.getContent();
                     if (content.equals("Main, qual o proximo navio?")) {
@@ -78,23 +80,23 @@ public class MainAgent extends Agent {
                             msg = new ACLMessage(ACLMessage.INFORM);
                             msg.setOntology("Navio");
                             msg.addReceiver(new AID("RTG", AID.ISLOCALNAME));
-                            
+
                             if (navioEmAtendimento == null) {
                                 verificaContainersNavio();
                             }
-                            
+
                             msg.setContentObject(navioEmAtendimento);
                             myAgent.send(msg);
                         } catch (IOException ex) {
                             System.err.println("Erro no envio da mensagem: " + ex);
                         }
-                        
+
                     }
                 }
             }
         });
     }
-    
+
     private void verificaContainersNavio() {
         cntrSelecionados.clear();
         navioEmAtendimento = selecionaNavio();
@@ -106,31 +108,12 @@ public class MainAgent extends Agent {
         }
     }
 
-//    private void acionaRTG() {
-//        ACLMessage msgRTG = new ACLMessage(ACLMessage.INFORM);
-//        msgRTG.addReceiver(new AID("RTG", AID.ISLOCALNAME));
-//        msgRTG.setOntology("Atracação Navio");
-//        msgRTG.setContent("Organize os Containers");
-//        myAgent.send(msgRTG);
-//    }
-    private void partidaNavio() {
-        navios.add(navioEmAtendimento);
-        navioEmAtendimento = null;
-    }
-    
-    private void atualizaAtracacaoNavio() {
-//                int temp = partidaNavioTick;
-//                partidaNavioTick = (
-//                        partidaNavioTick - chegadaNavioTick) + partidaNavioTick + diferencaEntreAtracacaoNavios;
-//                chegadaNavioTick = temp + diferencaEntreAtracacaoNavios;
-    }
-    
     private Navio selecionaNavio() {
         return navios.get(0);
     }
-    
+
     private void createChegadaCaminhaoBehavior() {
-        
+
         addBehaviour(new TickerBehaviour(this, tempoTick) {
             @Override
             protected void onTick() {
@@ -142,18 +125,17 @@ public class MainAgent extends Agent {
                         Caminhao.FILA_GATE);
                 //adicionar animacao chegada caminhao
                 informaGateNovoCaminhao(caminhao);
-//                if(this.getTickCount() == chegadaNavioTick){
-//                    verificaContainersNavio();
-//                    acionaRTG();
-//                }else if(this.getTickCount() == partidaNavioTick){
-//                    partidaNavio();
-//                    atualizaAtracacaoNavio();
-//                }              
+                if (this.getTickCount() % 10 == 0) {
+                    partidaNavio();
+                    navios.add(new Navio());
+                }
 
+                patio.setTick(this.getTickCount());
+                patio.setNavio(navioEmAtendimento);
 //            patio.getjPanelPosicaoGateIN().setBackground(core.getCores().get(new Random().nextInt(core.cores.size())));
 //              patio.addCaminhao(caminhoes.size() * 50, 10, caminhao);
             }
-            
+
             private void informaGateNovoCaminhao(Caminhao caminhao) {
                 try {
                     ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
@@ -164,7 +146,17 @@ public class MainAgent extends Agent {
                     System.err.println("Erro no envio da mensagem: " + ex);
                 }
             }
-            
+
+            private void partidaNavio() {
+                if (navioEmAtendimento != null) {
+
+                    System.out.println(getAID().getLocalName() + ": Navio " + navioEmAtendimento.getNomeNavio() + " partindo");
+                    navioEmAtendimento = null;
+                    pilhaNavio.clear();
+                    patio.drawPilha02(pilhaNavio);
+                }
+            }
+
         });
     }
 }

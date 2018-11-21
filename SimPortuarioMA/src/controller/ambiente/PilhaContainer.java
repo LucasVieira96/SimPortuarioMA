@@ -14,7 +14,7 @@ import java.util.Stack;
  * @author Lucas
  */
 public class PilhaContainer {
-    
+
     private final List<MapaPilha> mapaPilha;
     private final Integer width;
     private final Integer height;
@@ -24,39 +24,35 @@ public class PilhaContainer {
 
     /**
      * Inicia a pilha de containers do terminal
+     *
      * @param width
      * @param height
-     * @param altMaxPilha 
+     * @param altMaxPilha
      */
     public PilhaContainer(Integer width, Integer height, Integer altMaxPilha) {
         this.alturaMaxima = altMaxPilha;
         this.width = width;
         this.height = height;
-        this.pilha = new Stack[width][height];
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                pilha[i][j] = new Stack();
-            }
-        }
+        this.pilha = new Stack[this.width][this.height];
         this.mapaPilha = new java.util.ArrayList();
-        this.capacidade = (width * height) * altMaxPilha;
+        init();
     }
 
     public boolean pushContainer(Container container, Integer height, Integer width) {
         if (pilha[width][height].size() <= alturaMaxima) {
             pilha[width][height].push(container);
             mapaPilha.add(new MapaPilha(width, height, container));
-            capacidade ++;
+            capacidade++;
             return true;
         }
         return false;
     }
 
-    public Container popContainer (Integer width, Integer height){
-        capacidade --;
+    public Container popContainer(Integer width, Integer height) {
+        capacidade--;
         for (int i = 0; i < mapaPilha.size(); i++) {
             MapaPilha mapa = mapaPilha.get(i);
-            if(mapa.getPosWidth() == width && mapa.getPosHeight() == height){
+            if (mapa.getPosWidth() == width && mapa.getPosHeight() == height) {
                 mapaPilha.remove(i);
             }
         }
@@ -86,6 +82,19 @@ public class PilhaContainer {
     public int getCapacidade() {
         return capacidade;
     }
-    
-    
+
+    public void clear() {
+        mapaPilha.clear();
+        init();
+    }
+
+    private void init() {
+        for (int i = 0; i < width; i++) {
+            for (int j = 0; j < height; j++) {
+                pilha[i][j] = new Stack();
+            }
+        }
+        this.capacidade = (width * height) * this.alturaMaxima;
+    }
+
 }

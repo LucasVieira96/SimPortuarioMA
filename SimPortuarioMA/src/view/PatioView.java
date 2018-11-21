@@ -7,6 +7,7 @@ package view;
 
 import controller.ambiente.Caminhao;
 import controller.ambiente.Container;
+import controller.ambiente.Navio;
 import controller.ambiente.PilhaContainer;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -83,7 +84,10 @@ public class PatioView extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jPanelPilha02 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
+        jLabelTick = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
+        jTextFieldNavio = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -239,13 +243,43 @@ public class PatioView extends javax.swing.JFrame {
 
         jPanel5.setLayout(new java.awt.GridBagLayout());
 
-        jLabel9.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(153, 0, 0));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("Tick: 0");
-        jPanel5.add(jLabel9, new java.awt.GridBagConstraints());
+        jLabelTick.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
+        jLabelTick.setForeground(new java.awt.Color(153, 0, 0));
+        jLabelTick.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTick.setText("Tick: 0");
+        jPanel5.add(jLabelTick, new java.awt.GridBagConstraints());
 
         JPanelAsfalto.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 70, 30));
+
+        jPanel7.setLayout(new java.awt.GridBagLayout());
+
+        jLabel9.setFont(new java.awt.Font("Calibri", 1, 18)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Proximo navio");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanel7.add(jLabel9, gridBagConstraints);
+
+        jTextFieldNavio.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextFieldNavio.setText("Nenhum");
+        jTextFieldNavio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNavioActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanel7.add(jTextFieldNavio, gridBagConstraints);
+
+        JPanelAsfalto.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 50, 180, 40));
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -257,30 +291,16 @@ public class PatioView extends javax.swing.JFrame {
 
         jPanel6.setBackground(new java.awt.Color(102, 102, 102));
         jPanel6.setOpaque(false);
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel8.setBackground(new java.awt.Color(255, 255, 255));
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/truck-vazio.png"))); // NOI18N
+        jPanel6.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, -1, -1));
 
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.TRAILING);
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/road.jpg"))); // NOI18N
         jLabel7.setText("\n");
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(jLabel8)
-                .addGap(611, 611, 611)
-                .addComponent(jLabel7))
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(35, 35, 35)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel7)))
-        );
+        jPanel6.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 30, 830, -1));
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -289,6 +309,10 @@ public class PatioView extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jTextFieldNavioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNavioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNavioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -375,6 +399,21 @@ public class PatioView extends javax.swing.JFrame {
                 getJTextFieldReachStacker().setText("LIVRE");
             } else {
                 getJTextFieldReachStacker().setText(caminhao.getPlaca());
+            }
+            this.revalidate();
+            this.repaint();
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+    public synchronized boolean setNavio(Navio navio) {
+        try {
+            if (navio == null) {
+                getJTextFieldNavio().setText("Nenhum");
+            } else {
+                getJTextFieldNavio().setText(navio.getNomeNavio());
             }
             this.revalidate();
             this.repaint();
@@ -517,8 +556,27 @@ public class PatioView extends javax.swing.JFrame {
         return jPanelPilha02;
     }
 
+    public synchronized boolean setTick(int tick) {
+        try {
+            getJLabelTick().setText("Tick: " + tick);
+
+            return true;
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            return false;
+        }
+    }
+
+    public JLabel getJLabelTick() {
+        return jLabelTick;
+    }
+
     public JList<String> getFilaCaminhoesJList() {
         return filaCaminhoesJList;
+    }
+
+    public JTextField getJTextFieldNavio() {
+        return jTextFieldNavio;
     }
 
     public JTextField getJTextFieldReachStacker() {
@@ -552,17 +610,20 @@ public class PatioView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelTick;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanelAgua;
     private javax.swing.JPanel jPanelPilha01;
     private javax.swing.JPanel jPanelPilha02;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextFieldGate;
+    private javax.swing.JTextField jTextFieldNavio;
     private javax.swing.JTextField jTextFieldReachStacker;
     // End of variables declaration//GEN-END:variables
 }
