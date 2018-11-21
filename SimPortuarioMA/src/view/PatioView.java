@@ -6,9 +6,15 @@
 package view;
 
 import controller.ambiente.Caminhao;
+import controller.ambiente.Container;
+import controller.ambiente.PilhaContainer;
+import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.GridBagConstraints;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.Iterator;
+import java.util.Stack;
 import java.util.Vector;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListCellRenderer;
@@ -38,6 +44,21 @@ public class PatioView extends javax.swing.JFrame {
         filaCaminhoesJList.setModel(filaCaminhoesVector);
         DefaultListCellRenderer renderer = (DefaultListCellRenderer) filaCaminhoesJList.getCellRenderer();
         renderer.setHorizontalAlignment(JLabel.CENTER);
+//        JPanel panel = this.getJPanelPilha01();
+//        GridBagConstraints c = new GridBagConstraints();
+//        c.fill = GridBagConstraints.VERTICAL;
+//        c.gridx = 0;
+//        c.gridy = 0;
+//        JLabel label = new JLabel("Teste");
+//
+//        panel.add(label, c);
+//        c = new GridBagConstraints();
+//        c.fill = GridBagConstraints.VERTICAL;
+//        c.gridx = 0;
+//        c.gridy = 1;
+//        label = new JLabel("Teste");
+//
+//        panel.add(label, c);
     }
 
     /**
@@ -62,6 +83,12 @@ public class PatioView extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jTextFieldReachStacker = new javax.swing.JTextField();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jPanelPilha01 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jPanelPilha02 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(800, 600));
@@ -168,6 +195,50 @@ public class PatioView extends javax.swing.JFrame {
 
         JPanelAsfalto.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 50, 140, 40));
 
+        jPanel3.setLayout(new java.awt.GridBagLayout());
+
+        jLabel5.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("Pilha 01");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanel3.add(jLabel5, gridBagConstraints);
+
+        jPanelPilha01.setLayout(new java.awt.GridBagLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 20.0;
+        jPanel3.add(jPanelPilha01, gridBagConstraints);
+
+        JPanelAsfalto.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 120, 320, 190));
+
+        jPanel4.setLayout(new java.awt.GridBagLayout());
+
+        jLabel6.setFont(new java.awt.Font("Calibri", 1, 14)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("Pilha 02");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanel4.add(jLabel6, gridBagConstraints);
+
+        jPanelPilha02.setLayout(new java.awt.GridBagLayout());
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 20.0;
+        jPanel4.add(jPanelPilha02, gridBagConstraints);
+
+        JPanelAsfalto.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 300, 190));
+
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
         gridBagConstraints.gridy = 1;
@@ -271,6 +342,122 @@ public class PatioView extends javax.swing.JFrame {
         }
     }
 
+    public synchronized boolean drawPilha01(PilhaContainer pilha) {
+        try {
+            JPanel panel = this.getJPanelPilha01();
+            panel.removeAll();
+            for (int i = 0; i < pilha.getWidth(); i++) {
+                for (int j = 0; j < pilha.getHeight(); j++) {
+                    Stack<Container> p = pilha.getPilha()[i][j];
+                    Container container = null;
+
+                    if (p.size() > 0) {
+                        container = p.peek();
+                    }
+
+                    GridBagConstraints c = new GridBagConstraints();
+                    c.fill = GridBagConstraints.BOTH;
+                    c.gridx = i;
+                    c.gridy = j;
+                    c.weightx = 1;
+                    c.weighty = 1;
+                    c.insets.bottom = 1;
+                    c.insets.left = 1;
+                    c.insets.right = 1;
+                    c.insets.top = 1;
+                    JLabel label = new JLabel("Vazio");
+                    label.setHorizontalAlignment(JLabel.CENTER);
+                    if (container != null) {
+                        label.setText(p.size() + "");
+                        String tooltip = "";
+                        for (Iterator<Container> iterator = p.iterator(); iterator.hasNext();) {
+                            Container next = iterator.next();
+                            tooltip = next.getNumeracao() + "<br/>" + tooltip;
+                        }
+                        label.setToolTipText("<html><p>" + tooltip + "</p></html>");
+                        label.setBackground(container.getCor());
+                        label.setOpaque(true);
+                        if (container.getCor().getRGB() == Color.WHITE.getRGB()
+                                || container.getCor().getRGB() == Color.YELLOW.getRGB()
+                                || container.getCor().getRGB() == Color.CYAN.getRGB()
+                                || container.getCor().getRGB() == Color.GREEN.getRGB()) {
+                            label.setForeground(Color.BLACK);
+                        } else {
+                            label.setForeground(Color.WHITE);
+                        }
+                    }
+
+                    panel.add(label, c);
+                }
+            }
+
+            panel.revalidate();
+            panel.repaint();
+            return true;
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            return false;
+        }
+    }
+
+    public synchronized boolean drawPilha02(PilhaContainer pilha) {
+        try {
+            JPanel panel = this.getJPanelPilha02();
+            panel.removeAll();
+            for (int i = 0; i < pilha.getWidth(); i++) {
+                for (int j = 0; j < pilha.getHeight(); j++) {
+                    Stack<Container> p = pilha.getPilha()[i][j];
+                    Container container = null;
+
+                    if (p.size() > 0) {
+                        container = p.peek();
+                    }
+
+                    GridBagConstraints c = new GridBagConstraints();
+                    c.fill = GridBagConstraints.BOTH;
+                    c.gridx = i;
+                    c.gridy = j;
+                    c.weightx = 1;
+                    c.weighty = 1;
+                    c.insets.bottom = 1;
+                    c.insets.left = 1;
+                    c.insets.right = 1;
+                    c.insets.top = 1;
+                    JLabel label = new JLabel("Vazio");
+                    label.setHorizontalAlignment(JLabel.CENTER);
+                    if (container != null) {
+                        label.setText(p.size() + "");
+                        String tooltip = "";
+                        for (Iterator<Container> iterator = p.iterator(); iterator.hasNext();) {
+                            Container next = iterator.next();
+                            tooltip = next.getNumeracao() + "<br/>" + tooltip;
+                        }
+                        label.setToolTipText("<html><p>" + tooltip + "</p></html>");
+                        label.setBackground(container.getCor());
+                        label.setOpaque(true);
+                        if (container.getCor().getRGB() == Color.WHITE.getRGB()
+                                || container.getCor().getRGB() == Color.YELLOW.getRGB()
+                                || container.getCor().getRGB() == Color.CYAN.getRGB()
+                                || container.getCor().getRGB() == Color.GREEN.getRGB()) {
+                            label.setForeground(Color.BLACK);
+                        } else {
+                            label.setForeground(Color.WHITE);
+                        }
+                    }
+
+                    panel.add(label, c);
+                }
+            }
+
+            panel.revalidate();
+            panel.repaint();
+            return true;
+        } catch (Exception ex) {
+            System.err.println(ex.getMessage());
+            return false;
+        }
+    }
+
 //    private void updateGateList() {
 //        DefaultListModel model = new DefaultListModel();
 //        for (int i = 0; i < filaCaminhoesVector.size(); i++) {
@@ -280,6 +467,14 @@ public class PatioView extends javax.swing.JFrame {
 //        model.no filaCaminhoesJList
 //        .setModel(model);
 //    }
+    public JPanel getJPanelPilha01() {
+        return jPanelPilha01;
+    }
+
+    public JPanel getJPanelPilha02() {
+        return jPanelPilha02;
+    }
+
     public JList<String> getFilaCaminhoesJList() {
         return filaCaminhoesJList;
     }
@@ -310,9 +505,15 @@ public class PatioView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanelAgua;
+    private javax.swing.JPanel jPanelPilha01;
+    private javax.swing.JPanel jPanelPilha02;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextFieldGate;
     private javax.swing.JTextField jTextFieldReachStacker;

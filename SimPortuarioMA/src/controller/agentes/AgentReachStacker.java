@@ -89,6 +89,7 @@ public class AgentReachStacker extends Agent {
                                         caminhao.setContainer(null);
                                         caminhao.setStatus(Caminhao.LIBERADO_STACKER);
                                         patio.setCaminhaoReachStacker(null);
+                                        patio.drawPilha01(pilha);
                                         System.out.println(getAID().getLocalName() + ": Caminhão liberado! - " + caminhao.getPlaca());
                                         removeBehaviour(this);
                                     } else {
