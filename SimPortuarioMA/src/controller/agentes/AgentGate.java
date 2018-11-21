@@ -91,8 +91,8 @@ public class AgentGate extends Agent {
                                             reply.setContentObject(atendendo);
                                             System.out.println(getAID().getLocalName() + ": Liberando Caminhão! - " + atendendo.getPlaca());
                                             myAgent.send(reply);
-                                            atendendo = null;
                                             patio.setCaminhaoGate(atendendo);
+                                            atendendo = null;
                                             removeBehaviour(this);
                                         } catch (IOException ex) {
                                             Logger.getLogger(AgentGate.class.getName()).log(Level.SEVERE, null, ex);

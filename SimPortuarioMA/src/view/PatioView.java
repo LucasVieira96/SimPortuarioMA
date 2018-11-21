@@ -19,6 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import org.netbeans.lib.awtextra.AbsoluteConstraints;
+import org.netbeans.lib.awtextra.AbsoluteLayout;
 
 /**
  *
@@ -35,6 +37,7 @@ public class PatioView extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         setAlwaysOnTop(true);
+        lblNavio.setVisible(false);
         filaCaminhoesJList.setModel(filaCaminhoesVector);
         DefaultListCellRenderer renderer = (DefaultListCellRenderer) filaCaminhoesJList.getCellRenderer();
         renderer.setHorizontalAlignment(JLabel.CENTER);
@@ -66,6 +69,7 @@ public class PatioView extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanelAgua = new javax.swing.JPanel();
+        lblNavio = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         JPanelAsfalto = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
@@ -93,9 +97,7 @@ public class PatioView extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(800, 600));
         setMinimumSize(new java.awt.Dimension(800, 600));
-        setPreferredSize(new java.awt.Dimension(800, 600));
         setResizable(false);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
@@ -103,16 +105,17 @@ public class PatioView extends javax.swing.JFrame {
         jPanelAgua.setMaximumSize(new java.awt.Dimension(800, 100));
         jPanelAgua.setMinimumSize(new java.awt.Dimension(800, 100));
         jPanelAgua.setPreferredSize(new java.awt.Dimension(800, 100));
-        jPanelAgua.setLayout(new java.awt.GridBagLayout());
+        jPanelAgua.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblNavio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Container-Ship-Top-Red-icon.png"))); // NOI18N
+        jPanelAgua.add(lblNavio, new org.netbeans.lib.awtextra.AbsoluteConstraints(278, 32, 260, 70));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/water.gif"))); // NOI18N
         jLabel3.setToolTipText("");
         jLabel3.setMaximumSize(new java.awt.Dimension(800, 100));
         jLabel3.setMinimumSize(new java.awt.Dimension(800, 100));
         jLabel3.setPreferredSize(null);
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.fill = java.awt.GridBagConstraints.VERTICAL;
-        jPanelAgua.add(jLabel3, gridBagConstraints);
+        jPanelAgua.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -411,9 +414,12 @@ public class PatioView extends javax.swing.JFrame {
     public synchronized boolean setNavio(Navio navio) {
         try {
             if (navio == null) {
+                lblNavio.setVisible(false);
                 getJTextFieldNavio().setText("Nenhum");
             } else {
+                lblNavio.setVisible(true);
                 getJTextFieldNavio().setText(navio.getNomeNavio());
+                lblNavio.setToolTipText(navio.getNomeNavio());
             }
             this.revalidate();
             this.repaint();
@@ -625,5 +631,11 @@ public class PatioView extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldGate;
     private javax.swing.JTextField jTextFieldNavio;
     private javax.swing.JTextField jTextFieldReachStacker;
+    private javax.swing.JLabel lblNavio;
     // End of variables declaration//GEN-END:variables
+
+    public JLabel getLblNavio() {
+        return lblNavio;
+    }
+
 }
