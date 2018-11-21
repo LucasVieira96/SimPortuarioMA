@@ -44,6 +44,8 @@ public class AgentReachStacker extends Agent {
             System.out.println("- " + it.next());
         }
         pilha = (PilhaContainer) this.getArguments()[1];
+        
+        patio.drawPilha01(pilha);
         addBehaviour(new CyclicBehaviour(this) {
             @Override
             public void action() {
@@ -81,7 +83,7 @@ public class AgentReachStacker extends Agent {
                                 @Override
                                 public void executeAfterTimeOut() {
                                     System.out.println(getAID().getLocalName()
-                                            + ": Container descarregado! - " + container.getNumeracao());
+                                            + ": Container descarregado! - " + container.getNumeracao() + " - Navio destino: " + container.getNavioDestino().getNomeNavio());
                                     if (pilha.pushContainer(container,
                                             new Random().nextInt(pilha.getWidth()),
                                             new Random().nextInt(pilha.getHeight()))) {
