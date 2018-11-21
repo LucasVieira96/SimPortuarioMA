@@ -6,19 +6,12 @@
 package view;
 
 import controller.ambiente.Caminhao;
-import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.Vector;
-import javax.imageio.ImageIO;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import jdk.nashorn.internal.runtime.arrays.ArrayData;
 
 /**
  *
@@ -62,6 +55,7 @@ public class PatioView extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jTextFieldReachStacker = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(800, 600));
@@ -176,6 +170,13 @@ public class PatioView extends javax.swing.JFrame {
         gridBagConstraints.weighty = 100.0;
         getContentPane().add(JPanelAsfalto, gridBagConstraints);
 
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/road.jpg"))); // NOI18N
+        jLabel5.setText("\n");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 2;
+        getContentPane().add(jLabel5, gridBagConstraints);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -224,35 +225,36 @@ public class PatioView extends javax.swing.JFrame {
     public synchronized boolean addCaminhaoFila(Caminhao caminhao) {
         try {
             this.filaCaminhoesVector.addElement(caminhao.getPlaca());
-            this.filaCaminhoesVector.notify();
+            this.revalidate();
+            this.repaint();
             return true;
         } catch (Exception ex) {
-            System.err.println(ex.getMessage());
             return false;
         }
     }
 
-    public synchronized boolean removerCaminhaoFila(Caminhao caminhao) {
+    public boolean removerCaminhaoFila(Caminhao caminhao) {
         try {
             this.filaCaminhoesVector.removeElement(caminhao.getPlaca());
-            this.filaCaminhoesVector.notify();
+            this.revalidate();
+            this.repaint();
             return true;
         } catch (Exception ex) {
-            System.err.println(ex.getMessage());
             return false;
         }
     }
 
-    public synchronized boolean setCaminhaoGate(Caminhao caminhao) {
+    public boolean setCaminhaoGate(Caminhao caminhao) {
         try {
             if (caminhao == null) {
                 getJTextFieldGate().setText("LIVRE");
             } else {
                 getJTextFieldGate().setText(caminhao.getPlaca());
             }
+            this.revalidate();
+            this.repaint();
             return true;
         } catch (Exception ex) {
-            System.err.println(ex.getMessage());
             return false;
         }
     }
@@ -264,9 +266,10 @@ public class PatioView extends javax.swing.JFrame {
             } else {
                 getJTextFieldReachStacker().setText(caminhao.getPlaca());
             }
+            this.revalidate();
+            this.repaint();
             return true;
         } catch (Exception ex) {
-            System.err.println(ex.getMessage());
             return false;
         }
     }
@@ -310,6 +313,7 @@ public class PatioView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelAgua;

@@ -80,11 +80,11 @@ public class AgentReachStacker extends Agent {
                             addBehaviour(new DelayBehaviour(myAgent, TimeUnit.SECONDS.toMillis(5)) {
                                 @Override
                                 public void executeAfterTimeOut() {
+                                    System.out.println(getAID().getLocalName()
+                                            + ": Container descarregado! - " + container.getNumeracao());
                                     if (pilha.pushContainer(container,
                                             new Random().nextInt(pilha.getWidth()),
                                             new Random().nextInt(pilha.getHeight()))) {
-                                        System.out.println(getAID().getLocalName()
-                                                + ": Container descarregado! - " + container.getNumeracao());
                                         container = null;
                                         caminhao.setContainer(null);
                                         caminhao.setStatus(Caminhao.LIBERADO_STACKER);
